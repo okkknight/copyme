@@ -19,3 +19,18 @@ Append one entry per meaningful change set.
 
 - `npm run build`
 - Browser verification on `/` and `/training-studio`
+
+## 2026-03-24
+
+### Added
+
+- Added the formal 15-fixture regression baseline under `data/regression/regression-baseline-v1.json`
+- Added `docs/regression/BASELINE_V1.md` as the human-readable baseline summary for future regression sweeps
+- Added `src/lib/full-fixture-regression.ts` and the `runFullFixtureRegression()` store action to sweep all fixed fixtures in one pass
+- Added a regression baseline API route at `src/app/api/regression-baseline/route.ts`
+- Added a `Run Full Regression` action in Proxy Review so the fixed-fixture sweep can be rerun from the UI
+
+### Verified
+
+- `npm run build`
+- Full regression sweep over all 15 fixed fixtures

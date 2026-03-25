@@ -34,50 +34,50 @@ function DashboardPageContent() {
   return (
     <div className="space-y-6">
       <SectionTitle
-        kicker="Overview"
+        kicker="总览"
         title="Persona Training Workbench"
-        subtitle="A control console for training, observing, and reviewing teacher persona replication."
-        right={<Pill tone="accent">Stateful MVP</Pill>}
+        subtitle="用于训练、观察和回看 teacher persona 复制效果的控制台。"
+        right={<Pill tone="accent">有状态 MVP</Pill>}
       />
 
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.95fr]">
-        <Panel title="Current Persona Model" subtitle="Versioned teacher persona snapshot" className="h-full">
+        <Panel title="当前 Persona Model" subtitle="版本化的 teacher persona 快照" className="h-full">
           <div className="grid gap-4 md:grid-cols-2">
-            <Metric label="Version" value={personaModel.version} />
-            <Metric label="Maturity" value={`${personaModel.maturity}/100`} />
-            <Metric label="Total Sessions" value={String(sessions.length)} />
-            <Metric label="Accepted Rules" value={String(personaModel.acceptedRuleIds.length)} />
+            <Metric label="版本" value={personaModel.version} />
+            <Metric label="成熟度" value={`${personaModel.maturity}/100`} />
+            <Metric label="Sessions 总数" value={String(sessions.length)} />
+            <Metric label="已接受规则" value={String(personaModel.acceptedRuleIds.length)} />
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
             <Pill tone="good">Decision-first</Pill>
-            <Pill tone="accent">Traceable</Pill>
-            <Pill tone="warn">Proxy drift monitored</Pill>
+            <Pill tone="accent">可追溯</Pill>
+            <Pill tone="warn">Proxy drift 监测中</Pill>
           </div>
         </Panel>
 
-        <Panel title="Quick Start" subtitle="Fast entry points for the training loop">
+        <Panel title="快速开始" subtitle="训练流程的快捷入口">
           <div className="flex flex-col gap-3">
             <Link
               href="/training-studio"
               className="inline-flex w-full items-center justify-center rounded-xl border border-accent/30 bg-accent/12 px-4 py-2 text-sm font-medium text-accent transition hover:bg-accent/18"
             >
-              Start New Training
+              开始新训练
             </Link>
             <Link
               href="/proxy-review"
               className="inline-flex w-full items-center justify-center rounded-xl border border-line bg-white/5 px-4 py-2 text-sm font-medium text-text transition hover:bg-white/8"
             >
-              Run Proxy Review
+              运行 Proxy Review
             </Link>
             <SecondaryButton className="w-full" onClick={resetMockState}>
-              Reset Mock State
+              重置 Mock State
             </SecondaryButton>
           </div>
         </Panel>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[1fr_1fr_1fr]">
-        <Panel title="Recent Sessions" subtitle="Latest three training sessions">
+        <Panel title="最近 Sessions" subtitle="最近 3 次训练 session">
           <div className="space-y-3">
             {recentSessions.map((session) => (
               <div key={session.id} className="rounded-xl border border-line bg-black/20 p-3">
@@ -93,7 +93,7 @@ function DashboardPageContent() {
           </div>
         </Panel>
 
-        <Panel title="Recent Rule Updates" subtitle="Latest rules surfaced in the workbench">
+        <Panel title="最近规则更新" subtitle="工作台中最新浮现的 rules">
           <div className="space-y-3">
             {recentRules.map((rule) => (
               <div key={rule.id} className="rounded-xl border border-line bg-black/20 p-3">
@@ -113,13 +113,13 @@ function DashboardPageContent() {
           </div>
         </Panel>
 
-        <Panel title="Student Templates" subtitle="Quick launch presets for training sessions">
+        <Panel title="Student Templates" subtitle="用于训练 session 的快速启动预设">
           <div className="grid gap-3">
             {studentTemplates.map((template) => (
               <div key={template.id} className="rounded-xl border border-line bg-black/20 p-3">
                 <div className="flex items-center justify-between">
                   <div className="font-medium">{template.name}</div>
-                  <Pill tone="accent">{template.level}</Pill>
+                  <Pill tone="accent">{template.defaultLevel}</Pill>
                 </div>
                 <p className="mt-2 text-xs leading-5 text-muted">{template.summary}</p>
               </div>

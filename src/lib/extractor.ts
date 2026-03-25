@@ -1,4 +1,4 @@
-import type { PersonaLayer, PersonaRule, Session, StudentProfile, Turn } from "@/lib/types";
+import type { PersonaLayer, PersonaRule, Session, SimulatedStudentProfile, Turn } from "@/lib/types";
 import { inferTeachingActions } from "@/lib/mock-engine";
 
 export type ExtractedRuleBlueprint = PersonaRule;
@@ -50,16 +50,16 @@ function hasPattern(text: string, patterns: RegExp[]) {
   return patterns.some((pattern) => pattern.test(text));
 }
 
-function repeatedErrorPattern(turns: Turn[], profile: StudentProfile) {
+function repeatedErrorPattern(turns: Turn[], profile: SimulatedStudentProfile) {
   const studentTurns = turns.filter((turn) => turn.speaker === "student");
   const repeated = studentTurns.filter((turn) => {
     const text = `${turn.text} ${turn.tags?.join(" ")}`.toLowerCase();
-    return text.includes(profile.errorPattern) || text.includes("mistake") || text.includes("wrong") || text.includes("freeze");
+    return text.includes(profile.config.errorPattern) || text.includes("mistake") || text.includes("wrong") || text.includes("freeze");
   });
   return repeated.length >= 2;
 }
 
-function analyzeTeacherTurns(turns: Turn[], profile: StudentProfile) {
+function analyzeTeacherTurns(turns: Turn[], profile: SimulatedStudentProfile) {
   const detectedTeachingBehaviors = new Set<string>();
   const temporaryStyleNotes = new Set<string>();
   const temporaryDecisionNotes = new Set<string>();
@@ -168,7 +168,7 @@ function analyzeTeacherTurns(turns: Turn[], profile: StudentProfile) {
   };
 }
 
-export function extractSessionInsights(session: Session, profile: StudentProfile, rules: PersonaRule[]): ExtractorResult {
+export function extractSessionInsights(session: Session, profile: SimulatedStudentProfile, rules: PersonaRule[]): ExtractorResult {
   const transcript = session.transcript;
   const recentTurns = transcript.slice(-8);
   const result = analyzeTeacherTurns(recentTurns, profile);
