@@ -1,87 +1,38 @@
-# Persona Training Workbench
+# CopyMe
 
-CopyMe is a desktop-first workbench for training a teacher persona through repeated student interactions. It is designed to capture how a teacher decides, not just how they sound.
+A teacher's real method is often invisible: what they do with a nervous beginner, a clever slacker, or someone who keeps making the same mistake. CopyMe is a personal training bench for turning those choices into a teacher agent that can be inspected and improved.
 
-The project includes:
+You play yourself. The app plays different kinds of students. Teach them as you normally would, then use the resulting sessions to extract the rules behind your decisions. CopyMe can compare your response with the proxy teacher's response, surface the gap, and feed your correction into the next round. The point is not to imitate a teacher's catchphrases; it is to distill their teaching judgment through a repeatable loop.
 
-- a shared app store for sessions, rules, and proxy review state
-- parameter-driven student simulation
-- behavior-pattern extraction and session-level judgments
-- persona rule competition, contradictions, and evidence tracking
-- Proxy Review calibration, reaction control, and micro-edit selection
-- local project-file persistence with browser-cache fallback
-- a fixed regression baseline for repeatable validation
+## Start with a student
 
-## Project Context
+1. Open **Training Studio** and give the student a level, confidence, attitude, and a problem to work through.
+2. Run the interaction, then open **Sessions** to see what the teacher did and what that moment says about their habits.
+3. Visit **Persona Model** to inspect the growing set of rules and the evidence behind each one.
+4. Use **Proxy Review** when you want to put a candidate response next to the teacher's response and say exactly what needs fixing. The repository includes 15 fixed cases for repeatable review.
 
-If you are a new agent or returning later, start here:
-
-- [PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)
-- [docs/handoff/README.md](./docs/handoff/README.md)
-
-## What You Get
-
-- Dashboard
-- Training Studio
-- Sessions
-- Persona Model
-- Proxy Review
-- Shared store with local project-file persistence and browser cache fallback
-- Parameter-driven student builder and mock engine
-- Behavior-pattern extractor v2
-- Session judgments decoupled from global rule state
-- Evidence competition, contradictions, lifecycle downgrades, and falsification
-- Hypothesis rules, competition groups, and rule replacement records
-- Temporal performance records, competition rounds, and explanation ecology
-- Stabilization kernel with incumbent/current leader split, dominance lock, effective pressure, turnover, displacement-aware decay, layered memory, and recovery curves
-- Review signals and forced correction write-back
-- Reset to initial mock state
-
-## Project Status
-
-- The app is a local/self-hosted workbench, not a public multi-user service.
-- Canonical workbench state is saved to `data/runtime/workbench-state.json`.
-- That runtime directory is intentionally gitignored so your local training state stays private to your machine.
-- Proxy Review also ships with a persisted full-fixture regression baseline at `data/regression/regression-baseline-v1.json`.
-
-## Tech
-
-- Next.js 14
-- TypeScript
-- Tailwind CSS
-- Zustand
+The Dashboard is the home screen for the work: recent sessions on one side, the current shape of the teacher on the other.
 
 ## Run locally
+
+You need Node.js and npm.
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open `http://127.0.0.1:3000`.
+Open <http://127.0.0.1:3000>. It runs entirely with the included deterministic simulations, so there is no API key to chase down before you can try it. Use `npm run build` when you want a production build.
 
-## Build
+## Data and project status
 
-```bash
-npm run build
-```
+- Workbench state is saved locally in `data/runtime/workbench-state.json`, with a browser-cache fallback. The runtime directory is ignored by Git.
+- The 15-fixture Proxy Review baseline is in [`data/regression/regression-baseline-v1.json`](data/regression/regression-baseline-v1.json).
+- **Reset Mock State** restores the supplied sample data and UI selections.
+- The persistence endpoint is for local or self-hosted use. Add access control before putting it on a shared network.
 
-## Notes
-
-- Core state is persisted locally in `data/runtime/workbench-state.json` and mirrored for the standalone runtime build; the browser cache key is `copyme-workbench-state-v12`.
-- `data/runtime/` is intentionally gitignored so local training state stays private to the machine that created it.
-- The `/api/workbench-state` endpoint is meant for local/self-hosted use. Do not expose it publicly without adding your own authentication and access controls.
-- `Reset Mock State` restores the initial mock dataset and UI selections.
-- The current MVP still uses mock data and deterministic rules. No backend or real model calls are included yet.
-- Training Studio student parameters now flow into a deterministic simulated student profile.
-- Sessions page shows session-specific judgments, evidence chains, and contradiction records, while Persona Model still aggregates accepted global rules and surfaces at-risk rules separately.
-- Proxy Review writes correction signals first, then turns them into evidence, contradictions, and candidate seeds when needed.
-- Proxy Review now also supports the full U/V/W/Y regression stack over the 15 fixed fixtures (`review-01` ~ `review-05` and `ood-01` ~ `ood-10`), with a persisted baseline at `data/regression/regression-baseline-v1.json`.
-- Global rules now have competition stats, lifecycle downgrade paths, replacement protocols, and temporal performance history, so accepted/stable rules can still be challenged, contradicted, deprecated, invalidated, replaced, rising, or fading over time.
-- Competition groups now distinguish `incumbent` from `current leader`, apply resistance against raw challenger pressure, track turnover before replacement, and split natural decay from challenger-driven displacement.
-- Layered pressure memory keeps challenger / contradiction / review / turnover shocks separate, and recovery now uses nonlinear cooldown stages instead of a single linear reset.
-- The latest regression sweep is documented in `docs/regression/BASELINE_V1.md` and can be rerun from Proxy Review with the `Run Full Regression` button.
+CopyMe is built with Next.js 14, TypeScript, Tailwind CSS, and Zustand. For the architecture and current development state, see [`PROJECT_CONTEXT.md`](PROJECT_CONTEXT.md). Contributors can start with the [handoff index](docs/handoff/README.md); the [regression baseline notes](docs/regression/BASELINE_V1.md) explain the fixed review fixtures.
 
 ## License
 
-MIT
+[MIT](LICENSE).
